@@ -1,0 +1,52 @@
+# Decision Template Script
+
+# Step 1: Define the decision type
+decision_type = input("Enter decision type (Operational, Strategic, Tactical, Personal): ")
+
+# Step 2: Set objectives
+main_goal = input("Define the main goal of the decision: ")
+sub_goals = input("List any sub-goals (comma-separated): ").split(',')
+
+# Step 3: Identify criteria and constraints
+criteria = input("List decision criteria (comma-separated): ").split(',')
+constraints = input("List any constraints (comma-separated): ").split(',')
+
+# Step 4: Assign weights to criteria
+weights = {}
+print("\nAssign weights (1-10) to each criterion:")
+for criterion in criteria:
+    weights[criterion] = int(input(f"Weight for {criterion}: "))
+
+# Step 5: Define alternatives
+alternatives = {}
+num_alternatives = int(input("\nHow many alternatives are you evaluating? "))
+for i in range(num_alternatives):
+    name = input(f"Name of alternative {i+1}: ")
+    description = input(f"Description of {name}: ")
+    alternatives[name] = {"description": description}
+
+# Step 6: Evaluate alternatives against criteria
+evaluation_scores = {}
+print("\nProvide scores (1-10) for each alternative against the criteria:")
+for alt in alternatives.keys():
+    evaluation_scores[alt] = {}
+    print(f"\nEvaluating {alt}:")
+    for criterion in criteria:
+        score = int(input(f"Score for {criterion}: "))
+        evaluation_scores[alt][criterion] = score
+
+# Step 7: Calculate total scores for each alternative
+total_scores = {}
+for alt, scores in evaluation_scores.items():
+    total_scores[alt] = sum(weights[criterion] * scores[criterion] for criterion in criteria)
+
+# Step 8: Select the best alternative
+selected_alternative = max(total_scores, key=total_scores.get)
+print("\nDecision Results:")
+print(f"Selected Alternative: {selected_alternative}")
+print(f"Reason: Best total score of {total_scores[selected_alternative]} based on weighted criteria.")
+
+# Step 9: Document and review
+review_plan = input("\nHow will the decision be reviewed? ")
+print("\nDecision-making process complete.")
+print(f"Review Plan: {review_plan}")
